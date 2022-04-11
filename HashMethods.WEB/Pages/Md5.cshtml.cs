@@ -14,6 +14,9 @@ namespace HashMethods.WEB.Pages
         [BindProperty]
         public string RawString { get; set; }
 
+        [BindProperty]
+        public string Salt { get; set; }
+
         #endregion
 
         public void OnGet()
@@ -40,9 +43,22 @@ namespace HashMethods.WEB.Pages
         #region privateMethods
         private string ComputeMd5()
         {
+            List<byte> rawStringWithSaltByte = new List<byte>();
+
             MD5 md5 = MD5.Create();
 
-            byte[] byteResult = md5.ComputeHash(System.Text.Encoding.UTF8.GetBytes(RawString));
+            byte[] rawStringByte = System.Text.Encoding.UTF8.GetBytes(RawString);
+
+            if (!string.IsNullOrEmpty(Salt))
+            {
+                byte[] saltByte = System.Text.Encoding.UTF8.GetBytes(Salt);
+
+                rawStringWithSaltByte.AddRange(saltByte);
+            }
+
+            rawStringWithSaltByte.AddRange(rawStringByte);
+
+            byte[] byteResult = md5.ComputeHash(rawStringWithSaltByte.ToArray());
 
             Result = Convert.ToBase64String(byteResult);
 
@@ -54,6 +70,8 @@ namespace HashMethods.WEB.Pages
             Result = string.Empty;
 
             RawString = string.Empty;
+
+            Salt = string.Empty;
 
             ModelState.Clear();
         }
