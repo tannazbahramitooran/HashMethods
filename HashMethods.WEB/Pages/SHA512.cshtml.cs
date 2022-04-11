@@ -4,7 +4,7 @@ using System.Security.Cryptography;
 
 namespace HashMethods.WEB.Pages
 {
-    public class Sha256Model : PageModel
+    public class SHA512Model : PageModel
     {
         #region bindProperty(ies)
 
@@ -24,7 +24,7 @@ namespace HashMethods.WEB.Pages
         {
             string Result = string.Empty;
 
-            ComputeSha256();
+            ComputeSha512();
 
             return Page();
         }
@@ -37,11 +37,11 @@ namespace HashMethods.WEB.Pages
         }
 
         #region privateMethods
-        private string ComputeSha256()
+        private string ComputeSha512()
         {
-            HashAlgorithm sha256 = SHA256.Create();
+            HashAlgorithm sha512 = SHA512.Create();
 
-            byte[] byteResult = sha256.ComputeHash(System.Text.Encoding.UTF8.GetBytes(RawString));
+            byte[] byteResult = sha512.ComputeHash(System.Text.Encoding.UTF8.GetBytes(RawString));
 
             Result = Convert.ToBase64String(byteResult);
 
