@@ -1,0 +1,17 @@
+﻿@page
+@model HashMethods.WEB.Pages.Sha256Model
+@{
+}
+
+<form method="post">
+    <div class="input-group">
+        <input asp-for="@Model.RawString" class="form-control" type="text" placeholder="write your raw string here..." aria-label="write your raw string here...">
+        <button asp-page-handler="Compute" type="submit" class="btn btn-secondary ">Submit</button>
+        <button asp-page-handler="Reset" type="submit" class="btn btn-outline-danger">Reset</button>
+    </div>
+</form>
+<br />
+<div class="text-center">
+    <span>@Model.Result</span>
+</div>
+
